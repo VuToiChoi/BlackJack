@@ -45,14 +45,9 @@ namespace BlackJack
                             Console.Write("1. Spela\n0. Exit\n--> ");
                             gameStatus = int.Parse(Console.ReadLine());
                             deck.ShuffleCardDeck();
-                            //playerCards.Add(deck.GetFirstCard());
+                            playerCards.Add(deck.GetFirstCard());
                             dealersCards.Add(deck.GetFirstCard());
-                            //playerCards.Add(deck.GetFirstCard());
-                            playerCards.Add(new Card("Ace", 0, "Clover"));
-                            playerCards.Add(new Card("Seven", 7, "Heart"));
-                            playerCards.Add(new Card("Seven", 7, "Spades"));
-                            playerCards.Add(new Card("Ace", 0, "Spades"));
-                            playerCards.Add(new Card("Ace", 0, "Heart"));
+                            playerCards.Add(deck.GetFirstCard());
                             dealersCards.Add(deck.GetFirstCard());
                         }
                         catch (Exception e)
@@ -72,6 +67,8 @@ namespace BlackJack
                 {
                     Console.Clear();
                     PrintDealerAndPlayerPoint(dealersCards, playerCards, 1000);
+
+
 
                     Console.Write("1. Hit\n2. Stand\n--> ");
                     int playerChoice = int.Parse(Console.ReadLine());
@@ -159,7 +156,13 @@ namespace BlackJack
             int playerPoint = 0;
             for (int i = 0; i < playerCard.Count; i++)
             {
-
+                if (playerCard[i]._cardName != "Ace")
+                {
+                    playerPoint = playerCard[i]._cardPoint + playerPoint;
+                }
+            }
+            for (int i = 0; i < playerCard.Count; i++)
+            {
                 if (playerCard[i]._cardName == "Ace")
                 {
                     if (playerPoint <= 10)
@@ -173,10 +176,6 @@ namespace BlackJack
                         playerPoint = playerCard[i]._cardPoint + playerPoint;
                     }
                 }
-                else
-                {
-                    playerPoint = playerCard[i]._cardPoint + playerPoint;
-                }
             }
             return playerPoint;
         }
@@ -184,6 +183,13 @@ namespace BlackJack
         static int GetDealerPoint(List<Card> dealerCard)
         {
             int dealerPoint = 0;
+            for (int i = 0; i < dealerCard.Count; i++)
+            {
+                if (dealerCard[i]._cardName != "Ace")
+                {
+                    dealerPoint = dealerCard[i]._cardPoint + dealerPoint;
+                }
+            }
             for (int i = 0; i < dealerCard.Count; i++)
             {
                 if (dealerCard[i]._cardName == "Ace")
@@ -198,10 +204,6 @@ namespace BlackJack
                         dealerCard[i]._cardPoint = 1;
                         dealerPoint = dealerCard[i]._cardPoint + dealerPoint;
                     }
-                }
-                else
-                {
-                    dealerPoint = dealerCard[i]._cardPoint + dealerPoint;
                 }
             }
             return dealerPoint;
